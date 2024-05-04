@@ -1,14 +1,44 @@
  import { Link} from 'react-router-dom';
 import imageOne from '../assets/icons/logos.jfif'
+import { useContext } from 'react';
+import { AuthContext } from '../Provider/AuthProvider';
 const NavBar = () => {
+          
+       const {user, logout} = useContext(AuthContext);
 
-  
+
+       const handleLogutBtn = () =>{
+        console.log('your button is now working alhamdulillah');
+        logout()
+        .then(result =>{
+          console.log(result);
+        })
+        .catch(error =>{
+          console.error(error)
+        })
+       }
+    
+       
     const navMenu = <>
  
     <li className='uppercase font-popin font-semibold'><Link to={'/'}>Home</Link></li>
     <li className='uppercase font-popin font-semibold'><Link>About</Link></li>
     <li className='uppercase font-popin font-semibold'><Link>Services</Link></li>
-    <li className='uppercase font-popin font-semibold'><Link to={'/login'}>Login</Link></li>
+    {
+      user ? (
+        <>
+        <li onClick={handleLogutBtn} className='uppercase font-popin font-semibold'><Link  >Logout</Link></li>
+        <li className='uppercase font-popin font-semibold'><Link to={'/bookings'}>My Bookings</Link></li>
+        </>
+      )  :   (
+   
+        <li className='uppercase font-popin font-semibold'><Link to={'/login'}>Login</Link></li>
+
+  
+        
+      )  
+    }
+
     <li className='uppercase font-popin font-semibold'><Link to={'/singup'}>SingUp</Link></li>
  
      </>
